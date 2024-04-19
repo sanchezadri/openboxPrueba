@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Openbox Cart</title>
+	<style type="text/css">
+		table {
+			background-color: #cdf4ec;
+		}
+	</style>
+</head>
+
+<body>
+
+	<center>
+		<h1>
+			<span>Carrito con ID: </span>
+			<span th:text="${InfoCarrito.id}" th:remove="tag">title</span>
+		</h1>
+		<hr>
+		<br>
+		<table border="3" style="width: 90%">
+			<tr>
+				<th>Player</th>
+				<th>Collection</th>
+				<th>Condition</th>
+				<th>Amount</th>
+				<th>Price</th>
+			</tr>
+			<tr th:each="jugador : ${InfoCarrito.products}">
+				<td th:text="${jugador.description}"></td>
+				<td th:text="${jugador.collection}"></td>
+				<td th:text="${jugador.condition}"></td>
+				<td th:text="${jugador.amount}"></td>
+				<td th:text="${jugador.price}"></td>
+				<form th:action="@{/carrito/remove}" method="get">
+					<td><input type="text" name="query" th:value="${jugador.productId}" hidden class="form-control" />
+						<button type="submit" class="btn btn-success">Eliminar</button>
+					</td>
+				</form>
+				<form th:action="@{/carrito/removeOne}" method="get">
+					<td><input type="text" name="query" th:value="${jugador.productId}" hidden class="form-control" />
+						<button type="submit" class="btn btn-success">Eliminar Uno</button>
+					</td>
+				</form>
+			</tr>
+		</table>
+		<h1>
+			<hr>
+			<span>Precio Total: </span>
+			<span th:text="${InfoCarrito.total}">title</span>
+		</h1>
+		<form th:action="@{/restartCarrito}" method="get">
+			<td>
+				<button type="submit" class="btn btn-success">Eliminar todo el carrito</button>
+			</td>
+		</form>
+		<br>
+		<form th:action="@{/}" method="get">
+			<td>
+				<button type="submit" class="btn btn-success">Volver a productos</button>
+			</td>
+		</form>
+	</center>
+</body>
+
+</html>
